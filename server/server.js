@@ -1,3 +1,5 @@
+require("./config/config");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const { ObjectID } = require("mongodb");
@@ -8,6 +10,8 @@ var { User } = require("./models/user");
 var { mongoose } = require("./db/mongoose");
 
 var app = express();
+
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -88,13 +92,12 @@ app.patch("/todos/:id", (req, res) => {
         if (!todo) {
             return res.status(404).send();
         }
-        console.log(todo);
         res.send({todo});
     }).catch( e => res.status(400).send());
 });
 
-app.listen(3000, () => {
-    console.log(`Listening on port 3000`);
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
 });
 
 module.exports = { app };
